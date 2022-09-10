@@ -32,8 +32,8 @@
             android:layout_toStartOf="@+id/img_itemFile_more"
             android:layout_toEndOf="@+id/img_itemFile_type"
             android:text="Downloads"
-            android:textSize="16sp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/img_itemFile_more"
