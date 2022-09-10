@@ -3,4 +3,5 @@
     <string name="search_something">search something ...</string>
     <string name="add_new_folder">Add New Folder</string>
     <string name="enter_folder_name">enter folder name ...</string>
+    <string name="etlError">Folder name can not be empty</string>
 </resources>

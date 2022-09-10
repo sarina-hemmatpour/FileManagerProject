@@ -1,13 +1,16 @@
 package com.example.filemanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddNewFolderDialog.AddFolderCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,14 @@ public class MainActivity extends AppCompatActivity {
         File file=getExternalFilesDir(null);
 
         showFilesFragment(file.getPath() , false);
+
+        View btnAddNewFolder=findViewById(R.id.btn_main_addFile);
+        btnAddNewFolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                (new AddNewFolderDialog()).show(getSupportFragmentManager() , null);
+            }
+        });
 
 
 
@@ -33,4 +44,11 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onCreateButtonClicked(String folderName) {
+        Fragment currentFragment=getSupportFragmentManager().findFragmentById(R.id.frame_main_fragment);
+        if (currentFragment instanceof FileListFragment){
+            ((FileListFragment) currentFragment).createNewFolder(folderName);
+        }
+    }
 }

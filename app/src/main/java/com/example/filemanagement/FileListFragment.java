@@ -30,6 +30,10 @@ public class FileListFragment extends Fragment {
         path=getArguments().getString("path").trim();
     }
 
+    private FilesAdapter adapter;
+    private RecyclerView rvFiles;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,15 +49,17 @@ public class FileListFragment extends Fragment {
             }
         });
 
-        tvPath.setText(path.trim());
 
         File currentFile=new File(path);
 
+        tvPath.setText(currentFile.getName().equalsIgnoreCase("files")?"External Storage":currentFile.getName().trim());
+
         //file list
 
-        RecyclerView rvFiles=view.findViewById(R.id.rv_fragmentFileList_files);
+        rvFiles=view.findViewById(R.id.rv_fragmentFileList_files);
         rvFiles.setLayoutManager(new LinearLayoutManager(getContext() , LinearLayoutManager.VERTICAL , false));
-        rvFiles.setAdapter(new FilesAdapter(Arrays.asList(Objects.requireNonNull(currentFile.listFiles())),
+
+        adapter=new FilesAdapter(Arrays.asList(Objects.requireNonNull(currentFile.listFiles())),
                 new FilesAdapter.FileAdapterCallBack() {
                     @Override
                     public void onFileClicked(File file) {
@@ -62,7 +68,9 @@ public class FileListFragment extends Fragment {
                             ( (MainActivity) requireActivity()).showFilesFragment(file.getPath() , true);
                         }
                     }
-                }));
+                });
+
+        rvFiles.setAdapter(adapter);
 
 
 
@@ -79,5 +87,15 @@ public class FileListFragment extends Fragment {
         return fragment;
     }
 
+    //we have  path here
+    public void createNewFolder(String name){
+        File newFolder=new File(path+File.separator+name);
+        if (!newFolder.exists()){
+            if (newFolder.mkdir()){
+                adapter.addFile(newFolder);
+                rvFiles.scrollToPosition(0);
+            }
+        }
+    }
 
 }
