@@ -4,10 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/drawable/background_et_search.xml" value="0.1735" />
+        <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/drawable/dialog_add_new_folder.xml" value="0.1735" />
+        <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/drawable/ic_file_black_32dp.xml" value="0.1735" />
         <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/drawable/ic_folder_black_32dp.xml" value="0.1735" />
         <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/drawable/ic_grid_black_24dp.xml" value="0.1735" />
+        <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/drawable/ic_more_vertical_black_24dp.xml" value="0.1735" />
         <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/drawable/ic_search_gray_24dp.xml" value="0.1735" />
         <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/layout/dialog_add_new_folder.xml" value="0.33" />
+        <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/layout/fragment_file_list.xml" value="0.25" />
+        <entry key="..\:/Users/almas/AndroidStudioProjects/FileManagement/app/src/main/res/layout/item_file.xml" value="0.5" />
       </map>
     </option>
   </component>

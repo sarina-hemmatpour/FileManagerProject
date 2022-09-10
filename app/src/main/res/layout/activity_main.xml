@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/gray100">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -56,20 +57,26 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroup_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:checkedButton="@+id/btn_main_list"
+            android:layout_centerHorizontal="true"
             app:singleSelection="true"
             app:selectionRequired="true"
             android:layout_marginTop="12dp">
 
             <com.google.android.material.button.MaterialButton
+                android:backgroundTint="@color/white"
                 android:id="@+id/btn_main_list"
                 android:layout_width="wrap_content"
+                app:cornerRadius="8dp"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_list_black_24dp"
                 style="@style/Widget.App.Button.OutlinedButton.IconOnly"/>
             <com.google.android.material.button.MaterialButton
+                android:backgroundTint="@color/white"
+                app:cornerRadius="8dp"
                 android:id="@+id/btn_main_grid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,12 +84,16 @@
                 style="@style/Widget.App.Button.OutlinedButton.IconOnly"/>
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
+        <FrameLayout
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frame_main_fragment"
+            android:layout_below="@+id/toggleGroup_main"/>
+
     </RelativeLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/frame_main_fragment"/>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
