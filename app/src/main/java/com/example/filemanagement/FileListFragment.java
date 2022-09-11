@@ -60,13 +60,21 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
         tvPath.setText(currentFile.getName().equalsIgnoreCase("files")?"External Storage":currentFile.getName().trim());
 
         //file list
+        File[] files=null;
+        if (StorageHelper.isExternalStorageReadable())
+        {
+            files=currentFile.listFiles();
+        }
 
         rvFiles=view.findViewById(R.id.rv_fragmentFileList_files);
         rvFiles.setLayoutManager(new LinearLayoutManager(getContext() , LinearLayoutManager.VERTICAL , false));
 
-        adapter=new FilesAdapter(Arrays.asList(Objects.requireNonNull(currentFile.listFiles())), this);
+        adapter=new FilesAdapter(Arrays.asList(Objects.requireNonNull(files)), this);
 
         rvFiles.setAdapter(adapter);
+
+
+
 
 
 
@@ -86,12 +94,16 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
     //we have  path here
     public void createNewFolder(String name){
         File newFolder=new File(path+File.separator+name);
-        if (!newFolder.exists()){
-            if (newFolder.mkdir()){
-                adapter.addFile(newFolder);
-                rvFiles.scrollToPosition(0);
+        if (StorageHelper.isExternalStorageWritable())
+        {
+            if (!newFolder.exists()){
+                if (newFolder.mkdir()){
+                    adapter.addFile(newFolder);
+                    rvFiles.scrollToPosition(0);
+                }
             }
         }
+
     }
 
     @Override
@@ -104,55 +116,63 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
 
     @Override
     public void onDeleteItemClicked(File file) {
-        if (FileOperationUtil.delete(file))
+        if (StorageHelper.isExternalStorageWritable())
         {
-            String name=file.getName();
-            adapter.deleteFile(file);
-            Toast.makeText(getContext(), name+" file/folder is deleted", Toast.LENGTH_SHORT).show();
-        }
+            if (FileOperationUtil.delete(file))
+            {
+                String name=file.getName();
+                adapter.deleteFile(file);
+                Toast.makeText(getContext(), name+" file/folder is deleted", Toast.LENGTH_SHORT).show();
+            }
 
+        }
 
     }
 
     @Override
     public void onMoveItemClicked(File file) {
         File des=getDesFolder();
-        if (!des.exists()){
-            if (des.mkdir())
-            {
-                adapter.addFile(des);
-                rvFiles.scrollToPosition(0);
+        if(StorageHelper.isExternalStorageWritable())
+        {
+            if (!des.exists()){
+                if (des.mkdir())
+                {
+                    adapter.addFile(des);
+                    rvFiles.scrollToPosition(0);
+                }
             }
-        }
-        try {
-            if (FileOperationUtil.move(file , des))
-            {
-                adapter.deleteFile(file);
-                Toast.makeText(getContext(), file.getName() + " file/folder is moved", Toast.LENGTH_SHORT).show();
+            try {
+                if (FileOperationUtil.move(file , des))
+                {
+                    adapter.deleteFile(file);
+                    Toast.makeText(getContext(), file.getName() + " file/folder is moved", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(), ":|", Toast.LENGTH_SHORT).show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            else {
-                Toast.makeText(getContext(), ":|", Toast.LENGTH_SHORT).show();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public void onCopyItemClicked(File file) {
         File des=getDesFolder();
-        if (!des.exists()){
-            if (des.mkdir())
-            {
-                adapter.addFile(des);
-                rvFiles.scrollToPosition(0);
+        if (StorageHelper.isExternalStorageWritable()){
+            if (!des.exists()){
+                if (des.mkdir())
+                {
+                    adapter.addFile(des);
+                    rvFiles.scrollToPosition(0);
+                }
             }
-        }
-        try {
-            FileOperationUtil.copy(file , des);
-            Toast.makeText(getContext(), file.getName() + " file/folder is copied", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                FileOperationUtil.copy(file , des);
+                Toast.makeText(getContext(), file.getName() + " file/folder is copied", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -17,9 +17,12 @@ public class MainActivity extends AppCompatActivity implements AddNewFolderDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // path e foldere app ma ro barmigardune
-        File file=getExternalFilesDir(null);
+        //we always have to check if externalStorage is accessible
+        File file = null;
+        if (StorageHelper.isExternalStorageReadable())
+            file = getExternalFilesDir(null); // path e foldere app ma ro barmigardune
 
+        assert file != null;
         showFilesFragment(file.getPath() , false);
 
         View btnAddNewFolder=findViewById(R.id.btn_main_addFile);
