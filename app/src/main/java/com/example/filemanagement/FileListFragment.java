@@ -19,15 +19,13 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class FileListFragment extends Fragment implements FilesAdapter.FileAdapterCallBack {
 
     private String path;
-
-    private static File source;
-    private static File destination;
-
+    private File[] files=null;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -60,7 +58,6 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
         tvPath.setText(currentFile.getName().equalsIgnoreCase("files")?"External Storage":currentFile.getName().trim());
 
         //file list
-        File[] files=null;
         if (StorageHelper.isExternalStorageReadable())
         {
             files=currentFile.listFiles();
@@ -75,10 +72,22 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
 
 
 
-
-
-
         return view;
+    }
+
+    public void startSearching(String query)
+    {
+        adapter.setFiles(adapter.search(query, readAllFiles()));
+    }
+
+    public List<File> readAllFiles()
+    {
+        return Arrays.asList(Objects.requireNonNull(files));
+    }
+
+    public void reStartFilesAdapter()
+    {
+        adapter.setFiles(readAllFiles());
     }
 
 

@@ -107,6 +107,27 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FileViewHold
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFiles(List<File> files)
+    {
+        this.files=files;
+        notifyDataSetChanged();
+    }
+
+    public List<File> search(String query , List<File> allFiles)
+    {
+        List<File> result=new ArrayList<>();
+
+        for (File itemFile :
+                allFiles) {
+            if (itemFile.getName().trim().toLowerCase().contains(query.trim().toLowerCase())){
+                result.add(itemFile);
+            }
+        }
+
+        return result;
+    }
+
     public interface FileAdapterCallBack {
         void onFileClicked(File file);
         void onDeleteItemClicked(File file);

@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import java.io.File;
 
@@ -30,6 +33,42 @@ public class MainActivity extends AppCompatActivity implements AddNewFolderDialo
             @Override
             public void onClick(View view) {
                 (new AddNewFolderDialog()).show(getSupportFragmentManager() , null);
+            }
+        });
+
+
+        EditText etSearch=findViewById(R.id.et_main_search);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length()>0)
+                {
+                    //search
+                    Fragment fragment=getSupportFragmentManager().findFragmentById(R.id.frame_main_fragment);
+                    if (fragment instanceof FileListFragment)
+                    {
+                        ((FileListFragment) fragment).startSearching(charSequence.toString().trim());
+                    }
+                }
+                else
+                {
+                    Fragment fragment=getSupportFragmentManager().findFragmentById(R.id.frame_main_fragment);
+                    if (fragment instanceof FileListFragment)
+                    {
+                        ((FileListFragment) fragment).reStartFilesAdapter();
+                    }
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
