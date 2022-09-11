@@ -4,4 +4,7 @@
     <string name="add_new_folder">Add New Folder</string>
     <string name="enter_folder_name">enter folder name ...</string>
     <string name="etlError">Folder name can not be empty</string>
+    <string name="copy">Copy</string>
+    <string name="move">Move</string>
+    <string name="delete">Delete</string>
 </resources>
