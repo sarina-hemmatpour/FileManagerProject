@@ -18,8 +18,10 @@ import java.util.List;
 
 public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FileViewHolder> {
 
-    List<File> files;
-    FileAdapterCallBack callback;
+    private List<File> files;
+    private FileAdapterCallBack callback;
+
+    private ViewType viewType=ViewType.ROW;
 
     public FilesAdapter(List<File> files , FileAdapterCallBack fileAdapterCallBack) {
         this.files = new ArrayList<>(files);
@@ -29,7 +31,9 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FileViewHold
     @NonNull
     @Override
     public FileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new FileViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file , parent , false));
+        return new FileViewHolder(LayoutInflater.from(parent.getContext()).inflate(
+                viewType==ViewType.ROW.getValue()? R.layout.item_file : R.layout.item_file_grid ,
+                parent , false));
     }
 
     @Override
@@ -149,5 +153,17 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FileViewHold
             files.remove(index);
             notifyItemRemoved(index);
         }
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        return viewType.getValue();
+    }
+
+    public void changeViewType(ViewType viewTypeValue)
+    {
+        this.viewType=viewTypeValue;
+        notifyDataSetChanged();
     }
 }

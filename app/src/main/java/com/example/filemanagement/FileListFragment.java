@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,11 +27,17 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
 
     private String path;
     private File[] files=null;
+
+    private int spawnCount;
+
+    private GridLayoutManager gridLayoutManager;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         assert getArguments() != null;
         path=getArguments().getString("path").trim();
+        spawnCount=getArguments().getInt("spawnCount");
     }
 
     private FilesAdapter adapter;
@@ -64,10 +71,11 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
         }
 
         rvFiles=view.findViewById(R.id.rv_fragmentFileList_files);
-        rvFiles.setLayoutManager(new LinearLayoutManager(getContext() , LinearLayoutManager.VERTICAL , false));
+        gridLayoutManager=new GridLayoutManager(getContext() ,spawnCount, RecyclerView.VERTICAL , false);
+        rvFiles.setLayoutManager(gridLayoutManager);
 
         adapter=new FilesAdapter(Arrays.asList(Objects.requireNonNull(files)), this);
-
+        adapter.changeViewType(spawnCount==1?ViewType.ROW:ViewType.GRID);
         rvFiles.setAdapter(adapter);
 
 
@@ -91,10 +99,11 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
     }
 
 
-    public static FileListFragment newInstance(String path) {
+    public static FileListFragment newInstance(String path , int spawnCount) {
 
         Bundle args = new Bundle();
         args.putString("path", path);
+        args.putInt("spawnCount" , spawnCount);
         FileListFragment fragment = new FileListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -188,5 +197,27 @@ public class FileListFragment extends Fragment implements FilesAdapter.FileAdapt
     public File getDesFolder()
     {
         return new File(requireActivity().getExternalFilesDir(null).getPath()+File.separator+"Destination");
+    }
+
+    public void changeListView(ViewType value)
+    {
+        if (adapter!=null)
+        {
+            adapter.changeViewType(value);
+            if (value==ViewType.ROW)
+            {
+                gridLayoutManager.setSpanCount(1);
+                spawnCount=1;
+            }
+            else if(value==ViewType.GRID){
+                gridLayoutManager.setSpanCount(2);
+                spawnCount=2;
+            }
+        }
+
+    }
+
+    public void setSpawnCount(int spawnCount) {
+        this.spawnCount = spawnCount;
     }
 }

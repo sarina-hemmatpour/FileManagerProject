@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="4dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="12dp">
+
+        <ImageView
+            android:id="@+id/img_itemFile_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_more_vertical_black_24dp"
+            android:rotation="90"/>
+        <ImageView
+            android:id="@+id/img_itemFile_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@drawable/ic_folder_black_32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"/>
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/tv_item_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Downloads"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
